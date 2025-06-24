@@ -30,20 +30,31 @@ public class EventoServiceImpl implements EventoService {
         List<Evento> eventos = eventoRepository.findByNombre(entity.getNombre());
         if (!eventos.isEmpty()) {
             throw new IllegalArgumentException("Evento con el nombre '" + entity.getNombre() + "' ya existe.");
-        } else {
-            Evento evento = new Evento();
-            evento.setNombre(entity.getNombre());
-            evento.setEntrada(entity.isEntrada());
-            evento.setPrecio(entity.getPrecio());
-            evento.setInicio(entity.getInicio());
-            evento.setFin(entity.getFin());
-            evento.setClase(ClaseEvento.valueOf(entity.getClase()));
-            // Buscar y asignar el organizador
-            Usuario organizador = usuarioService.getUsuarioById(idUsuario)
-                    .orElseThrow(() -> new IllegalArgumentException("Organizador no encontrado"));
-            evento.setUsuarioOrganizador(organizador);
-            return eventoRepository.save(evento);
         }
+
+        if (entity.getInicio() != null && entity.getFin() != null && entity.getInicio().after(entity.getFin())) {
+            throw new IllegalArgumentException("La fecha de inicio debe ser anterior a la fecha de fin");
+        }
+
+        Evento evento = new Evento();
+        evento.setNombre(entity.getNombre());
+        evento.setEntrada(entity.isEntrada());
+        evento.setPrecio(entity.getPrecio());
+        evento.setInicio(entity.getInicio());
+        evento.setFin(entity.getFin());
+        if (entity.getCiudad() != null) {
+            evento.setCiudad(com.cultureclub.cclub.entity.Ciudad.valueOf(entity.getCiudad()));
+        }
+        evento.setLatitud(entity.getLatitud());
+        evento.setLongitud(entity.getLongitud());
+        evento.setImagenUrl(entity.getImagenUrl());
+        evento.setDetalleUrl(entity.getDetalleUrl());
+        evento.setClase(ClaseEvento.valueOf(entity.getClase()));
+        // Buscar y asignar el organizador
+        Usuario organizador = usuarioService.getUsuarioById(idUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Organizador no encontrado"));
+        evento.setUsuarioOrganizador(organizador);
+        return eventoRepository.save(evento);
     }
 
 }

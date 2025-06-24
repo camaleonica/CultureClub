@@ -14,4 +14,14 @@ public class EventoDTO {
     Date inicio;
     Date fin;
     String clase;
+
+    String ciudad;
+
+    Double latitud;
+
+    Double longitud;
+
+    String imagenUrl;
+
+    String detalleUrl;
 }
