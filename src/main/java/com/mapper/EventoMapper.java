@@ -15,6 +15,13 @@ public class EventoMapper {
         dto.setInicio(evento.getInicio());
         dto.setFin(evento.getFin());
         dto.setClase(evento.getClase().name());
+        if (evento.getCiudad() != null) {
+            dto.setCiudad(evento.getCiudad().name());
+        }
+        dto.setLatitud(evento.getLatitud());
+        dto.setLongitud(evento.getLongitud());
+        dto.setImagenUrl(evento.getImagenUrl());
+        dto.setDetalleUrl(evento.getDetalleUrl());
         return dto;
     }
 
@@ -27,6 +34,13 @@ public class EventoMapper {
         evento.setPrecio(dto.getPrecio());
         evento.setInicio(dto.getInicio());
         evento.setFin(dto.getFin());
+        if (dto.getCiudad() != null) {
+            evento.setCiudad(com.cultureclub.cclub.entity.Ciudad.valueOf(dto.getCiudad()));
+        }
+        evento.setLatitud(dto.getLatitud());
+        evento.setLongitud(dto.getLongitud());
+        evento.setImagenUrl(dto.getImagenUrl());
+        evento.setDetalleUrl(dto.getDetalleUrl());
         if (dto.getClase() != null) {
             evento.setClase(com.cultureclub.cclub.entity.ClaseEvento.valueOf(dto.getClase()));
         }

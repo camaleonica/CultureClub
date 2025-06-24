@@ -3,6 +3,8 @@ package com.cultureclub.cclub.entity;
 import java.sql.Date;
 import java.util.List;
 
+import com.cultureclub.cclub.entity.Ciudad;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -45,6 +47,22 @@ public class Evento {
 
     @Column
     private Date fin;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Ciudad ciudad;
+
+    @Column
+    private Double latitud;
+
+    @Column
+    private Double longitud;
+
+    @Column
+    private String imagenUrl;
+
+    @Column
+    private String detalleUrl;
 
     @ManyToMany
     @JoinTable(name = "evento_seguidores", joinColumns = @JoinColumn(name = "evento_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
